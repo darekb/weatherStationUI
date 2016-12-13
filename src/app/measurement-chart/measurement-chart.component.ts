@@ -19,7 +19,7 @@ import { MeasurmentChartDataService } from '../measurment-chart-data.service'
   }
   .measureLine{
     fill:none;
-    stroke:rgba(0,255,0,0.2);
+    stroke:rgba(0,255,0,0.6);
     stroke-width:2px;
   }
   `]
@@ -29,11 +29,11 @@ import { MeasurmentChartDataService } from '../measurment-chart-data.service'
 export class MeasurementChartComponent implements OnInit {
 
   @Input() type = '';
-  
+
   linePointsString:string = '';
-  
+
   constructor(private measurmentsChartCalculateService: MeasurmentsChartCalculateService, private measurmentChartDataService:MeasurmentChartDataService) {}
-  
+
   ngOnInit() {
     switch(this.type){
       case 'temperature':
