@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  background-color: gray;
+  color: white;
+  font-family: "Roboto";
+  font-weight: 200;
+  width:1000px;
+  height:730px;
+}
+@font-face {
+  font-family: 'WWDigital';
+  src: url('assets/WWDigital.woff') format('woff'),
+  url('assets/WWDigital.ttf') format('truetype'),
+  url('assets/WWDigital.svg#WWDigital') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
