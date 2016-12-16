@@ -14,4 +14,11 @@ export class TodayForecastService {
     });
   }
 
+  get530Forecast(){
+  	return this.af.database.list('/todayForecast/', {
+      query: {
+        limitToLast: 531
+      }
+    });
+  }
 }

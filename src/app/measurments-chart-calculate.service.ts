@@ -12,6 +12,9 @@ export class MeasurmentsChartCalculateService {
   plotWidth:number = 531;
   plotHeight:number = 90;
   lastDay:number = 0;
+  xMinMax:minMax;
+  yMinMax:minMax;
+  days:number[]  = [];
 
   constructor() { }
 
@@ -22,28 +25,73 @@ export class MeasurmentsChartCalculateService {
       all.push(elem.value);
       return all;
     },[]);
-    var data = pointsArray
-      .slice((pointsArray.length - this.plotWidth < 0 ? 0 : pointsArray.length - this.plotWidth), pointsArray.length)
-      .map(function (elem) {
-        return parseFloat(elem);
-      });
-    var minMax = this.returnMinMax(data);
-    if (data.length > 1) {
-      for (var k in data) {
-        pointsTxt = pointsTxt + (i > 0 ? ' L' : 'M') + this.returnProperX(parseInt(k, 10), data.length) + ',' + (this.plotHeight - this.returnProperY(data[k], minMax));
+    var timestampArray = chartData.reduce(function (all, elem){
+      all.push(elem.timestamp);
+      return all;
+    },[]);
+    this.yMinMax = this.returnMinMax(pointsArray);
+    this.xMinMax = this.returnMinMax(timestampArray);
+    if (pointsArray.length > 1) {
+      for (var k in pointsArray) {
+        pointsTxt = pointsTxt + (i > 0 ? ' L' : 'M') + this.returnProperX(timestampArray[k]) + ',' + (this.plotHeight - this.returnProperY(pointsArray[k]));
         i = i + 1;
       }
     }
     return pointsTxt;
   }
 
+  getMinMax(){
+    return {
+      xMinMax: this.xMinMax,
+      yMinMax: this.yMinMax
+    }
+  }
+
+  getOtherLinePoints(chartData){
+    var pointsTxt = ''; //'M0,100 ';
+    var i = 0;
+    var pointsArray = chartData.reduce(function (all, elem){
+      all.push(elem.value);
+      return all;
+    },[]);
+    var timestampArray = chartData.reduce(function (all, elem){
+      all.push(elem.timestamp);
+      return all;
+    },[]);
+    console.log('this.yMinMax', this.yMinMax);
+    console.log('this.xMinMax', this.xMinMax);
+    let lastValue = 0;
+    if (pointsArray.length > 1) {
+      for (var k in pointsArray) {
+        if(lastValue != pointsArray[k]){
+          lastValue = pointsArray[k];
+          console.log(k, lastValue);
+        }
+        pointsTxt = pointsTxt + (i > 0 ? ' L' : 'M') + this.returnProperX(timestampArray[k]) + ',' + (this.plotHeight - this.returnProperY(pointsArray[k]));
+        i = i + 1;
+      }
+    }
+    return pointsTxt;
+  }
+
+  
+  addDay(timestamp){
+    this.days.push(new Date(timestamp).getDay());
+  }
+
+  getDays(){
+    return this.days;
+  }
+
   getDayLines(chartData){
+    this.days = [];
     var _this = this;
     var dataLength = chartData.length;
     this.lastDay = this.returnDayFromDataString(chartData[0].date);
     return chartData.reduce(function (all, elem, i){
       if(_this.ifDayChange(elem.date)){
-        all.push(_this.returnProperX(parseInt(i, 10), dataLength));
+        _this.addDay(elem.timestamp);
+        all.push(_this.returnProperX(elem.timestamp));
       }
       return all;
     },[]);
@@ -69,13 +117,12 @@ export class MeasurmentsChartCalculateService {
     return out;
   }
 
-  returnProperY(y:number, minMax:minMax):number {
-    return Math.round(((y - minMax.min) * (this.plotHeight - 20) / minMax.delta) + 10);
+  returnProperY(y:number):number {
+    return Math.round(((y - this.yMinMax.min) * (this.plotHeight - 20) / this.yMinMax.delta) + 10);
   }
 
-  returnProperX(x:number, dataLength:number):number {
-    //return x;
-    return Math.round(x * (this.plotWidth / dataLength));
+  returnProperX(x:number):number {
+    return Math.round(((x - this.xMinMax.min) * this.plotWidth / this.xMinMax.delta));
   }
 
   ifDayChange(dataString:string): boolean {
