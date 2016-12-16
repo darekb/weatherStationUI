@@ -6,6 +6,7 @@ import { MeasurmentChartDataService } from '../measurment-chart-data.service'
   selector: 'app-measurement-chart',
   template: `
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 531 90" class="measuerChart" >
+    <line [attr.x1]="xVal" y1="0" [attr.x2]="xVal" y2="90" class="dayLine" *ngFor="let xVal of dayLines" />
     <path class="measureLine" [attr.d]="linePointsString"></path>
   </svg>
   `,
@@ -13,13 +14,17 @@ import { MeasurmentChartDataService } from '../measurment-chart-data.service'
   .measuerChart{
     border:1px solid #707070;
     width:100%;
-    height:90px;
     margin:0;
     padding:0;
   }
   .measureLine{
     fill:none;
     stroke:rgba(0,255,0,0.6);
+    stroke-width:2px;
+  }
+  .dayLine{
+    fill:none;
+    stroke:rgba(255,255,255,0.15);
     stroke-width:2px;
   }
   `]
@@ -31,6 +36,7 @@ export class MeasurementChartComponent implements OnInit {
   @Input() type = '';
 
   linePointsString:string = '';
+  dayLines:number[] = [];
 
   constructor(private measurmentsChartCalculateService: MeasurmentsChartCalculateService, private measurmentChartDataService:MeasurmentChartDataService) {}
 
@@ -58,6 +64,7 @@ export class MeasurementChartComponent implements OnInit {
     snaps.forEach(elem => {
       data.push(elem);
     });
+    this.dayLines = this.measurmentsChartCalculateService.getDayLines(data);
     this.linePointsString =  this.measurmentsChartCalculateService.getLinePoints(data);
   }
 }

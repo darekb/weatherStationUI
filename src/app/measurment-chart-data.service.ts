@@ -16,9 +16,18 @@ export class MeasurmentChartDataService {
         p:[]
       }
       snaps.forEach(elem => {
-        chartData.t.push(elem.temperature);
-        chartData.p.push(elem.pressure);
-        chartData.h.push(elem.humidity);
+        chartData.t.push({
+          value:elem.temperature,
+          date: elem.addedDate
+        });
+        chartData.p.push({
+          value:elem.pressure,
+          date: elem.addedDate
+        });
+        chartData.h.push({
+          value:elem.humidity,
+          date: elem.addedDate
+        });
       });
       this.temperatureChartData.emit(chartData.t);
       this.humidityChartData.emit(chartData.h);
