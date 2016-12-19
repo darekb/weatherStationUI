@@ -58,14 +58,11 @@ export class MeasurmentsChartCalculateService {
       all.push(elem.timestamp);
       return all;
     },[]);
-    console.log('this.yMinMax', this.yMinMax);
-    console.log('this.xMinMax', this.xMinMax);
     let lastValue = 0;
     if (pointsArray.length > 1) {
       for (var k in pointsArray) {
         if(lastValue != pointsArray[k]){
           lastValue = pointsArray[k];
-          console.log(k, lastValue);
         }
         pointsTxt = pointsTxt + (i > 0 ? ' L' : 'M') + this.returnProperX(timestampArray[k]) + ',' + (this.plotHeight - this.returnProperY(pointsArray[k]));
         i = i + 1;

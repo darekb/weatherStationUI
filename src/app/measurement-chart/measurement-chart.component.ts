@@ -66,14 +66,13 @@ export class MeasurementChartComponent implements OnInit {
   maxValue:string = '';
   minValue:string = '';
   daysArray:string[] = [
-    '',
+    'Nie',
     'Poń',
     'Wto',
     'Środ',
     'Czw',
     'Pią',
-    'Sob',
-    'Nie'
+    'Sob'
   ];
   days:string[] = [];
 
@@ -124,9 +123,11 @@ export class MeasurementChartComponent implements OnInit {
     // }
   }
   updateDays(){
+    this.days = [];
     var _this = this;
     var t = this.measurmentsChartCalculateService.getDays();
     t.forEach(function (elem){
+      //console.log(elem, _this.daysArray[elem]);
       _this.days.push(_this.daysArray[elem]);
     });
   }
