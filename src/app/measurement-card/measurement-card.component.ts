@@ -18,7 +18,7 @@ import { TodayForecastService } from '../today-forecast.service'
           <h2 class="value unit">{{measurement.unit}}</h2>
         </div>
         <div class="col s3" *ngIf="measurement.formToValuesPresent">
-          <span class="value small">od:{{measurement.from}}{{measurement.unit}}<br/>do:{{measurement.to}}{{measurement.unit}}</span>
+          <span class="value small">od:{{measurement.to}}{{measurement.unit}}<br />do:{{measurement.from}}{{measurement.unit}}</span>
         </div>
         <div class="col s3" *ngIf="measurement.averagePresent">
           <span class="value small">srednio:<br/>{{measurement.average}}{{measurement.unit}}</span>
@@ -89,7 +89,7 @@ export class MeasurementCardComponent implements OnInit {
   ngOnInit() {
     this.todayForecastSevice.getTodayForecast()
       .subscribe(snaps => {
-        snaps.forEach((today, index) => {
+        snaps.forEach((today, index:number) => {
           if(index==0){
             if(this.measurement.type == 'temperature'){
               this.measurement.from = today.tempMin;

@@ -11,8 +11,8 @@ import { TodayForecastService } from '../today-forecast.service'
       <line [attr.x1]="xVal" y1="0" [attr.x2]="xVal" y2="90" class="dayLine"  />
       <text [attr.x]="xVal + 10" y="18" class="descriptionFont">{{days[i]}}</text>
     </g>
-    <path class="otherLine" [attr.d]="maxTemp"></path>
-    <path class="otherLine" [attr.d]="minTemp"></path>
+    <!--<path class="otherLine" [attr.d]="maxTemp"></path>-->
+    <!--<path class="otherLine" [attr.d]="minTemp"></path>-->
     <path class="measureLine" [attr.d]="linePointsString"></path>
     <rect x="0" y="4" height="20" width="60" class="descriptionFontBackground" />
     <rect x="0" y="70" height="20" width="60" class="descriptionFontBackground" />

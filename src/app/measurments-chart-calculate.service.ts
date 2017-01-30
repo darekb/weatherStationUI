@@ -47,31 +47,31 @@ export class MeasurmentsChartCalculateService {
     }
   }
 
-  getOtherLinePoints(chartData){
-    var pointsTxt = ''; //'M0,100 ';
-    var i = 0;
-    var pointsArray = chartData.reduce(function (all, elem){
-      all.push(elem.value);
-      return all;
-    },[]);
-    var timestampArray = chartData.reduce(function (all, elem){
-      all.push(elem.timestamp);
-      return all;
-    },[]);
-    let lastValue = 0;
-    if (pointsArray.length > 1) {
-      for (var k in pointsArray) {
-        if(lastValue != pointsArray[k]){
-          lastValue = pointsArray[k];
-        }
-        pointsTxt = pointsTxt + (i > 0 ? ' L' : 'M') + this.returnProperX(timestampArray[k]) + ',' + (this.plotHeight - this.returnProperY(pointsArray[k]));
-        i = i + 1;
-      }
-    }
-    return pointsTxt;
-  }
+  //getOtherLinePoints(chartData){
+  //  var pointsTxt = ''; //'M0,100 ';
+  //  var i = 0;
+  //  var pointsArray = chartData.reduce(function (all, elem){
+  //    all.push(elem.value);
+  //    return all;
+  //  },[]);
+  //  var timestampArray = chartData.reduce(function (all, elem){
+  //    all.push(elem.timestamp);
+  //    return all;
+  //  },[]);
+  //  let lastValue = 0;
+  //  if (pointsArray.length > 1) {
+  //    for (var k in pointsArray) {
+  //      if(lastValue != pointsArray[k]){
+  //        lastValue = pointsArray[k];
+  //      }
+  //      pointsTxt = pointsTxt + (i > 0 ? ' L' : 'M') + this.returnProperX(timestampArray[k]) + ',' + (this.plotHeight - this.returnProperY(pointsArray[k]));
+  //      i = i + 1;
+  //    }
+  //  }
+  //  return pointsTxt;
+  //}
 
-  
+
   addDay(timestamp){
     this.days.push(new Date(timestamp).getDay());
   }
@@ -83,7 +83,6 @@ export class MeasurmentsChartCalculateService {
   getDayLines(chartData){
     this.days = [];
     var _this = this;
-    var dataLength = chartData.length;
     this.lastDay = this.returnDayFromDataString(chartData[0].date);
     return chartData.reduce(function (all, elem, i){
       if(_this.ifDayChange(elem.date)){
@@ -108,8 +107,6 @@ export class MeasurmentsChartCalculateService {
         out.min = elem;
       }
     });
-    out.min = out.min;
-    out.max = out.max;
     out.delta = Math.abs(out.max - out.min);
     return out;
   }

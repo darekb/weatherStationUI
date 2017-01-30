@@ -72,13 +72,17 @@ export class AppComponent  implements OnInit {
     });
     this.sensorsActValuesService.getActValues().subscribe(snaps => {
       snaps.forEach((actMeasurments, index) => {
-        if(index==0){
+       if(actMeasurments.sensorId==11){
+          //console.log('AppComponent.ngOnInit() sensorID: ' + actMeasurments.sensorId + ' temp:'+ actMeasurments.temperature);
           this.updateMeasurments(actMeasurments);
           this.lastMeasureTime = actMeasurments.addedDate;
           let t = actMeasurments.addedDate.split(' ');
           let t1 = t[1].split(':');
           this.lastMeasureTime = t1[0] + ':' + t1[1] + ':' + t1[2] + ' ' + t[0];
-          //console.log('AppComponent.ngOnInit() this.measurments', this.measurments);
+        } else if(actMeasurments.sensorId==12) {
+          //console.log('AppComponent.ngOnInit() sensorID: ' + actMeasurments.sensorId + ' temp:'+ actMeasurments.temperature);
+          this.measurments[0].value = Math.round(((this.measurments[0].value*1 + actMeasurments.temperature*1)/2)*100)/100;
+          //console.log('averageTemp:'+ this.measurments[0].value);
         }
       });
     });
