@@ -45,19 +45,19 @@ export class AppComponent  implements OnInit {
   measurments = [{
       type: 'temperature',
       title: 'Temperatura',
-      value: 0,
+      value: "0",
       unit:'°C'
     },
     {
       type: 'pressure',
       title: 'Ciśnienie',
-      value: 0,
+      value: "0",
       unit:'hPa'
     },
     {
       type: 'humidity',
       title: 'Wilgotność',
-      value: 0,
+      value: "0",
       unit:'%'
     }
   ];
@@ -80,16 +80,14 @@ export class AppComponent  implements OnInit {
           let t1 = t[1].split(':');
           this.lastMeasureTime = t1[0] + ':' + t1[1] + ':' + t1[2] + ' ' + t[0];
         } else if(actMeasurments.sensorId==12) {
-          //console.log('AppComponent.ngOnInit() sensorID: ' + actMeasurments.sensorId + ' temp:'+ actMeasurments.temperature);
-          this.measurments[0].value = Math.round(((this.measurments[0].value*1 + actMeasurments.temperature*1)/2)*100)/100;
-          //console.log('averageTemp:'+ this.measurments[0].value);
+          this.measurments[0].value = parseFloat(Math.round(((this.measurments[0].value*1 + actMeasurments.temperature*1)/2)*100)/100).toFixed(2);
         }
       });
     });
   }
   updateMeasurments(data) {
     this.measurments[0].value = data.temperature;
-    this.measurments[1].value = Math.round(data.pressure)/100;
-    this.measurments[2].value = data.humidity;
+    this.measurments[1].value = parseFloat(Math.round(data.pressure*1)/100).toFixed(2);
+    this.measurments[2].value = parseFloat(data.humidity*1).toFixed(2);
   }
 }

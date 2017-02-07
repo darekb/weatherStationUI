@@ -41,7 +41,7 @@ export class MeasurmentChartDataService {
   getDataForChart(){
   	return this.af.database.list('sensors/data/', {
       query: {
-        limitToLast: 531
+        limitToLast: 200
       }
     });
   }
