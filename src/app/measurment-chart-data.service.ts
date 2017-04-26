@@ -1,6 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
+
+
 @Injectable()
 export class MeasurmentChartDataService {
 
@@ -8,7 +10,7 @@ export class MeasurmentChartDataService {
   humidityChartData = new EventEmitter<number[]>();
   pressureChartData = new EventEmitter<number[]>();
 
-  constructor(private af:AngularFire) { 
+  constructor(private af:AngularFire) {
     this.getDataForChart().subscribe(snaps => {
       let chartData = {
         t:[],
@@ -17,7 +19,7 @@ export class MeasurmentChartDataService {
       }
       snaps.forEach(elem => {
         chartData.t.push({
-          value:elem.temperature,
+          value: elem.temperature,
           date: elem.addedDate,
           timestamp: elem.addedTimestamp
         });
@@ -41,7 +43,7 @@ export class MeasurmentChartDataService {
   getDataForChart(){
   	return this.af.database.list('sensors/data/', {
       query: {
-        limitToLast: 200
+        limitToLast: 255
       }
     });
   }

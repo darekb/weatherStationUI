@@ -73,7 +73,8 @@ export class MeasurmentsChartCalculateService {
 
 
   addDay(timestamp){
-    this.days.push(new Date(timestamp).getDay());
+    //console.log(timestamp);
+    this.days.push(new Date(timestamp*1).getDay());
   }
 
   getDays(){

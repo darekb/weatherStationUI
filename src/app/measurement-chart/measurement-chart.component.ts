@@ -75,9 +75,10 @@ export class MeasurementChartComponent implements OnInit {
     'Sob'
   ];
   days:string[] = [];
+  averageTemp:number[] = [];
 
 
-  constructor(private measurmentsChartCalculateService: MeasurmentsChartCalculateService, private measurmentChartDataService:MeasurmentChartDataService, private todayForecastService:TodayForecastService) {}
+  constructor(private measurmentsChartCalculateService: MeasurmentsChartCalculateService, private measurmentChartDataService:MeasurmentChartDataService, private todayForecastService:TodayForecastService, private todayForecastSevice:TodayForecastService) {}
 
   ngOnInit() {
     switch(this.type){
@@ -97,6 +98,20 @@ export class MeasurementChartComponent implements OnInit {
         });
       break;
     }
+    this.todayForecastSevice.getTodayForecast()
+      .subscribe(snaps => {
+        snaps.forEach((today, index) => {
+          this.today = today;
+          let t = this.today.forecastData.split(' ');
+          let t1 = t[1].split(':');
+          let newHour = parseInt(t1[0],10) + 1;
+          this.today.forecastData = newHour + ':' + t1[1] + ':' + t1[2] + ' ' + t[0];
+          this.averageTemp.push({
+
+          });
+
+        });
+      });
   }
   updateChart(snaps){
     let data = [];

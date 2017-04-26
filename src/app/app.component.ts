@@ -73,7 +73,6 @@ export class AppComponent  implements OnInit {
     this.sensorsActValuesService.getActValues().subscribe(snaps => {
       snaps.forEach((actMeasurments, index) => {
        if(actMeasurments.sensorId==11){
-          //console.log('AppComponent.ngOnInit() sensorID: ' + actMeasurments.sensorId + ' temp:'+ actMeasurments.temperature);
           this.updateMeasurments(actMeasurments);
           this.lastMeasureTime = actMeasurments.addedDate;
           let t = actMeasurments.addedDate.split(' ');

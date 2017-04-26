@@ -58,7 +58,7 @@ export class WeathercastTodayComponent implements OnInit {
     this.todayForecastSevice.getTodayForecast()
       .subscribe(snaps => {
         snaps.forEach((today, index) => {
-          if (index == 0) {
+          if (index == 529) {
             this.today = today;
             let t = this.today.forecastData.split(' ');
             let t1 = t[1].split(':');

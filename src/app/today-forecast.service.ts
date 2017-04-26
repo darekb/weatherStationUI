@@ -9,7 +9,7 @@ export class TodayForecastService {
   getTodayForecast(){
   	return this.af.database.list('/todayForecast/', {
       query: {
-        limitToLast: 1
+        limitToLast: 530
       }
     });
   }
